@@ -1,0 +1,59 @@
+# PR Compliance Checklist for CGDS iOS
+# Reference: https://docs.qodo.ai/qodo-documentation/qodo-merge/features/custom-compliance
+
+pr_compliances:
+
+  - title: "DDMSTheme Token Usage"
+    compliance_label: true
+    objective: "All spacing, colours, and radii must use DDMSTheme tokens instead of hardcoded values"
+    success_criteria: "Code accesses theme via @Environment(\\.theme) and uses theme.size, theme.color, theme.radius tokens for all styling (e.g., theme.size.size4, theme.color.containerBackgroundInfo, theme.radius.full)"
+    failure_criteria: "Hardcoded spacing values (e.g., .padding(16)), hardcoded colors (e.g., Color.blue, .fill(.red)), or hardcoded corner radii (e.g., cornerRadius: 8) instead of theme tokens"
+
+  - title: "No Convenience Inits"
+    compliance_label: true
+    objective: "When View-type parameters are generic and can be EmptyView, do not provide convenience initializers that omit these parameters"
+    success_criteria: "Generic View parameters that can be EmptyView require explicit passing; no 'init() where T == EmptyView' convenience initializers are provided"
+    failure_criteria: "Presence of convenience initializers like 'init() where Title == EmptyView' or similar patterns that allow omitting optional View parameters"
+
+  - title: "Breaking Changes Detection"
+    compliance_label: true
+    objective: "Identify and highlight any breaking changes in the PR to ensure they are intentional and communicated to consumers"
+    success_criteria: "No breaking changes present, OR the PR has a 'major' label indicating the breaking change is intentional"
+    failure_criteria: "Breaking changes detected (removed/renamed public APIs, changed method signatures, removed parameters, changed return types, protocol conformance changes) without a 'major' label on the PR"
+
+  - title: "Theme Color .color Suffix"
+    compliance_label: true
+    objective: "Theme color tokens return DDMSColor objects and require .color suffix to convert to SwiftUI Color"
+    success_criteria: "All theme color usages include .color suffix (e.g., theme.color.textPrimary.color, theme.color.containerBackgroundPrimary.color)"
+    failure_criteria: "Theme color tokens used without .color suffix (e.g., .foregroundColor(theme.color.textPrimary) instead of .foregroundColor(theme.color.textPrimary.color))"
+
+  - title: "Generic Naming Conflicts"
+    compliance_label: true
+    objective: "Avoid naming generic type parameters 'Content' in ViewModifier or 'Body' in View to prevent protocol conflicts"
+    success_criteria: "Generic type parameters in ViewModifier use names other than 'Content' (e.g., SheetContent, MainContent); generic type parameters in View use names other than 'Body' (e.g., BodyContent, CustomContent)"
+    failure_criteria: "ViewModifier with generic parameter named 'Content' (conflicts with ViewModifier protocol) or View with generic parameter named 'Body' (conflicts with View protocol's body property)"
+
+  - title: "One Screenshot Test Per Story"
+    compliance_label: true
+    objective: "Each story can only be used by ONE screenshot test (autoLightAndDark or manualLightAndDark) to prevent Applitools failures"
+    success_criteria: "Each storyName appears in only one autoLightAndDark() or manualLightAndDark() call; functional tests use withoutEyes() instead"
+    failure_criteria: "Same storyName used in multiple screenshot test methods with autoLightAndDark() or manualLightAndDark() calls"
+
+  - title: "UI Test Coverage for Components"
+    compliance_label: true
+    objective: "Every new component must have corresponding UI tests in UITests/ directory"
+    success_criteria: "New component in Sources/components/ has matching UITests/[ComponentName]UITests.swift file with BaseUITestCase inheritance"
+    failure_criteria: "New component added to Sources/components/ without corresponding UI test file in UITests/"
+
+  - title: "Accessibility Support"
+    compliance_label: true
+    objective: "Interactive components must include accessibility support for VoiceOver users"
+    success_criteria: "Interactive elements (buttons, controls, inputs) include accessibilityLabel, appropriate accessibilityAddTraits, and accessibilityIdentifier for testing"
+    failure_criteria: "New interactive components or controls lack accessibility modifiers (.accessibilityLabel, .accessibilityAddTraits, .accessibilityValue)"
+
+  - title: "Component Documentation"
+    compliance_label: true
+    objective: "New components must include README.md or README.mdx"
+    success_criteria: "New component directory contains README.md or README.mdx with usage examples"
+    failure_criteria: "New component in Sources/components/ missing README.md or README.mdx file"
+
