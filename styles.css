@@ -49,6 +49,8 @@ body.dark-mode {
 header {
     background: var(--bg-gradient);
     color: white;
+    padding: 30px;
+    text-align: center;
     position: relative;
 }
 
