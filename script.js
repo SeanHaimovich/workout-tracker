@@ -100,7 +100,7 @@ class WorkoutTracker {
                 exercises.push({
                     name,
                     sets: parseInt(sets),
-                    reps: parseInt(reps),
+                    reps: parseInt(sets),
                     weight: weight || null
                 });
             }
@@ -304,8 +304,11 @@ class WorkoutTracker {
         const totalWorkouts = this.workouts.length;
         const totalExercises = this.workouts.reduce((sum, workout) => sum + workout.exercises.length, 0);
         
+        const avgExercises = totalExercises / totalWorkouts;
+
         document.getElementById('totalWorkouts').textContent = totalWorkouts;
         document.getElementById('totalExercises').textContent = totalExercises;
+        document.getElementById('avgExercises').textContent = avgExercises.toFixed(1);
     }
 
     initDarkMode() {
