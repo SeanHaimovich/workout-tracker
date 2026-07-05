@@ -21,6 +21,9 @@ describe('WorkoutTracker', () => {
                 <button type="submit">Submit</button>
             </form>
             <div id="workoutsList" class="workouts-list"></div>
+            <span id="totalWorkouts">0</span>
+            <span id="totalExercises">0</span>
+            <span id="avgExercises">0</span>
             <div id="emptyState" class="empty-state"></div>
             <div id="workoutModal" class="modal">
                 <span class="close">&times;</span>
