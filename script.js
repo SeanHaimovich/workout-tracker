@@ -100,7 +100,7 @@ class WorkoutTracker {
                 exercises.push({
                     name,
                     sets: parseInt(sets),
-                    reps: parseInt(sets),
+                    reps: parseInt(reps),
                     weight: weight || null
                 });
             }
@@ -304,11 +304,15 @@ class WorkoutTracker {
         const totalWorkouts = this.workouts.length;
         const totalExercises = this.workouts.reduce((sum, workout) => sum + workout.exercises.length, 0);
         
-        const avgExercises = totalExercises / totalWorkouts;
+        const avgExercises = totalWorkouts === 0 ? 0 : totalExercises / totalWorkouts;
 
-        document.getElementById('totalWorkouts').textContent = totalWorkouts;
-        document.getElementById('totalExercises').textContent = totalExercises;
-        document.getElementById('avgExercises').textContent = avgExercises.toFixed(1);
+        const totalWorkoutsEl = document.getElementById('totalWorkouts');
+        const totalExercisesEl = document.getElementById('totalExercises');
+        const avgExercisesEl = document.getElementById('avgExercises');
+
+        if (totalWorkoutsEl) totalWorkoutsEl.textContent = totalWorkouts;
+        if (totalExercisesEl) totalExercisesEl.textContent = totalExercises;
+        if (avgExercisesEl) avgExercisesEl.textContent = avgExercises.toFixed(1);
     }
 
     initDarkMode() {
